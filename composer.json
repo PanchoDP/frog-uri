@@ -1,0 +1,72 @@
+{
+    "name": "panchodp/frog-uri",
+    "description": "Inspect,check and review the middlewares applies to your uri's in Laravel.",
+    "keywords": ["dev","php","command","laravel", "routes","uri","middleware"],
+    "type": "library",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "FrogUri\\": "src/"
+        }
+    },
+  "autoload-dev": {
+    "psr-4": {
+      "FrogUri\\Test\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "FrogUri\\FrogUriServiceProvider"
+      ]
+    }
+  },
+    "authors": [
+        {
+            "name": "Francisco de Pablo",
+            "email": "fcodepablo@gmail.com"
+        }
+    ],
+  "require": {
+    "php": "^8.3.0 | ^8.4.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^10.4",
+    "laravel/pint": "^1.23",
+    "larastan/larastan": "^3.5.0",
+    "pestphp/pest": "^3.8.2"
+  },
+  "scripts": {
+    "test": [
+      "./vendor/bin/pest"
+    ],
+    "test:coverage": [
+      "./vendor/bin/pest --coverage"
+    ],
+    "test:coverage-html": [
+      "./vendor/bin/pest --coverage-html=build/coverage"
+    ],
+    "test:coverage-xml": [
+      "./vendor/bin/pest --coverage-xml=build/coverage-xml"
+    ],
+    "pint": [
+      "./vendor/bin/pint"
+    ],
+    "analyze": [
+      "./vendor/bin/phpstan analyze"
+    ],
+    "test:all": [
+      "@test","@pint","@analyze"
+    ],
+    "test:full": [
+      "@test:coverage","@pint","@analyze"
+    ]
+  },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
