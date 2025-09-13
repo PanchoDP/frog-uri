@@ -1,7 +1,6 @@
 
-<p align="center"><a target="_blank"> <img alt="Logo for Barcode" src="art/barcode.webp"></a></p>
 
-
+# FrogUri
 
 <p align="center">
 <a ><img src="https://img.shields.io/badge/PHP-8.3%2B-blue" alt="Php"></a>
@@ -11,7 +10,7 @@
 <a href="https://github.com/PanchoDP/frog-uri/actions/workflows/tests.yml"><img src="https://github.com/PanchoDP/frog-uri/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
 </p>
 
-# FrogUri
+
 > [!IMPORTANT]
 > Caution: This package is a work in progress and may not be production-ready. Use at your own risk.
 
