@@ -56,6 +56,49 @@ This will display:
 - Formatted list with HTTP methods, URIs, and controllers
 - Security recommendations
 
+### Interactive Route Filtering
+
+Filter and analyze routes interactively with the new `frog:filter` command:
+
+```bash
+php artisan frog:filter
+```
+
+**Features:**
+- 📋 **Interactive middleware selection** with numbered table interface
+- 🎯 **Flexible filtering options**: Select individual middlewares (1,3,5) or all middlewares
+- 🚫 **Exclude mode** for security audits: `php artisan frog:filter --exclude`
+- 📊 **Visual results** with organized route information
+
+#### Include Mode (Default)
+Shows routes that **HAVE** the selected middlewares:
+```bash
+php artisan frog:filter
+# Select middleware numbers to see routes WITH those middlewares
+```
+
+#### Exclude Mode (Security Audits)
+Shows routes that **DO NOT HAVE** the selected middlewares:
+```bash
+php artisan frog:filter --exclude
+# Select middleware numbers to find routes WITHOUT those middlewares
+```
+
+**Common Security Use Cases:**
+```bash
+# Find routes without authentication
+php artisan frog:filter --exclude
+# Select "auth" to find unprotected routes
+
+# Find routes without rate limiting
+php artisan frog:filter --exclude
+# Select "throttle" to find routes without rate limiting
+
+# Find routes without both auth and admin protection
+php artisan frog:filter --exclude
+# Select "auth,admin" to find vulnerable admin routes
+```
+
 ## Features
 
 ### RouteCollection API
@@ -87,6 +130,13 @@ $secureApiRoutes = $collection
 // Security analysis
 $vulnerableRoutes = $collection->getRoutesWithoutMiddleware();
 $dangerousRoutes = $collection->getDangerousRoutes();
+
+// NEW: Exclude filtering for security audits
+$unprotectedRoutes = $collection->excludeByMiddleware('auth');
+$noRateLimitRoutes = $collection->excludeByMiddleware(['throttle', 'rate_limit']);
+$adminRoutesWithoutAuth = $collection
+    ->filterByUri('admin/*')
+    ->excludeByMiddleware('auth');
 ```
 
 ### Available Filter Methods
@@ -94,10 +144,12 @@ $dangerousRoutes = $collection->getDangerousRoutes();
 | Method | Description | Example |
 |--------|-------------|---------|
 | `filterByMiddleware()` | Filter routes by middleware | `$collection->filterByMiddleware('auth')` |
+| `excludeByMiddleware()` | **NEW** Exclude routes with middleware | `$collection->excludeByMiddleware('auth')` |
 | `filterByMethod()` | Filter routes by HTTP method | `$collection->filterByMethod('POST')` |
 | `filterByUri()` | Filter routes by URI pattern | `$collection->filterByUri('api/*')` |
 | `filterByName()` | Filter routes by route name | `$collection->filterByName('admin.*')` |
-| `getRoutesWithoutMiddleware()` | Get potentially vulnerable routes | `$collection->getRoutesWithoutMiddleware()` |
+| `getRoutesWithoutMiddleware()` | Get routes without any middleware | `$collection->getRoutesWithoutMiddleware()` |
+| `getRoutesWithoutSpecificMiddleware()` | **NEW** Get routes without specific middleware | `$collection->getRoutesWithoutSpecificMiddleware('auth')` |
 
 ### Utility Methods
 
@@ -121,9 +173,11 @@ $totalRoutes = $collection->count();
 ## Use Cases
 
 ### Security Audits
+- **Interactive filtering** with `frog:filter --exclude` to find vulnerable routes
 - Identify routes without authentication middleware
 - Find API endpoints missing rate limiting
 - Locate admin routes without proper protection
+- **Bulk security scanning** using exclude mode for multiple middlewares
 
 ### Code Reviews
 - Ensure consistent middleware application
