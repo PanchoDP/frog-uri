@@ -18,6 +18,7 @@ final class FrogAnalysisCommand extends Command
 
     public function handle(): int
     {
+        $this->info('🐸 Frog URI Analyze!!!');
         $this->info('Capturing Information!');
         $json_data = GetJsonAction::handle();
         $this->info('Processing Data!');

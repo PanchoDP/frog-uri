@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FrogUri;
 
 use FrogUri\Console\FrogAnalysisCommand;
+use FrogUri\Console\FrogFilterCommand;
 use Illuminate\Support\ServiceProvider;
 
 final class FrogUriServiceProvider extends ServiceProvider
@@ -14,6 +15,7 @@ final class FrogUriServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 FrogAnalysisCommand::class,
+                FrogFilterCommand::class,
             ]);
         }
     }

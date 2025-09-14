@@ -275,6 +275,48 @@ final class RouteCollection
     }
 
     /**
+     * Filter routes that do NOT contain any of the specified middlewares
+     *
+     * @param  string|array<int, string>  $middleware
+     */
+    public function excludeByMiddleware(string|array $middleware): self
+    {
+        $middlewares = is_array($middleware) ? $middleware : [$middleware];
+
+        $filtered = $this->routes->filter(function ($route) use ($middlewares) {
+            $routeMiddlewares = $route['middleware'] ?? [];
+            if (! is_array($routeMiddlewares)) {
+                return true; // Route has no middlewares, so it's not excluded
+            }
+
+            // Return true only if NONE of the exclude middlewares are found
+            foreach ($middlewares as $mw) {
+                if (in_array($mw, $routeMiddlewares)) {
+                    return false; // Found excluded middleware, filter out this route
+                }
+            }
+
+            return true; // Route doesn't have any of the excluded middlewares
+        });
+
+        /** @var array<int, array<string, mixed>> $result */
+        $result = array_values($filtered->toArray());
+
+        return new self($result);
+    }
+
+    /**
+     * Get routes that don't have any of the specified middlewares
+     *
+     * @param  string|array<int, string>  $middleware
+     * @return array<int, array<string, mixed>>
+     */
+    public function getRoutesWithoutSpecificMiddleware(string|array $middleware): array
+    {
+        return $this->excludeByMiddleware($middleware)->toArray();
+    }
+
+    /**
      * @return array<int, array<string, mixed>>
      */
     public function getDangerousRoutes(): array
