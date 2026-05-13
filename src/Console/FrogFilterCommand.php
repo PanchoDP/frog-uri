@@ -146,7 +146,7 @@ final class FrogFilterCommand extends Command
             return [];
         }
 
-        $selection = mb_trim($selection);
+        $selection = trim($selection);
 
         if (mb_strtolower($selection) === 'all') {
             return $availableMiddlewares;
@@ -180,6 +180,6 @@ final class FrogFilterCommand extends Command
             $data = mb_substr($data, 0, 47).'...';
         }
 
-        return mb_trim($data);
+        return trim($data);
     }
 }

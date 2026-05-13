@@ -16,7 +16,7 @@ final class GetJsonAction
         $result = Process::run('php artisan route:list -vv --json');
 
         if ($result->successful()) {
-            $output = mb_trim($result->output());
+            $output = trim($result->output());
 
             // Validar que no esté vacío
             if (empty($output)) {
@@ -90,7 +90,7 @@ final class GetJsonAction
             $cleanValue = mb_substr($cleanValue, 0, 500);
         }
 
-        return mb_trim($cleanValue) ?: '';
+        return trim($cleanValue);
     }
 
     /**

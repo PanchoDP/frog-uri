@@ -40,7 +40,7 @@ final class RenderInformAction
                 if (! is_string($method)) {
                     continue;
                 }
-                $method = mb_strtoupper(mb_trim($method));
+                $method = mb_strtoupper(trim($method));
                 if (! isset($grouped[$method])) {
                     $grouped[$method] = [];
                 }
@@ -140,7 +140,7 @@ final class RenderInformAction
 
         $priority = 0;
         foreach ($middlewares as $middleware) {
-            $middleware = mb_trim($middleware);
+            $middleware = trim($middleware);
             foreach ($priorities as $key => $value) {
                 if (str_contains($middleware, $key)) {
                     $priority += $value;
@@ -225,6 +225,6 @@ final class RenderInformAction
             $data = mb_substr($data, 0, 197).'...';
         }
 
-        return mb_trim($data);
+        return trim($data);
     }
 }
