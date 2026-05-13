@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.4] - 2026-05-13
+
+### 🐛 Bug Fixes
+
+- Fix phpstan errors mb_trim for trim
+
 ## [0.2.3] - 2026-05-13
 
 ### 🐛 Bug Fixes
