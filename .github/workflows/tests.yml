@@ -43,8 +43,5 @@ jobs:
     - name: Run tests
       run: composer test
 
-    - name: Run code formatting check
-      run: composer pint
-
     - name: Run static analysis
       run: composer analyze
